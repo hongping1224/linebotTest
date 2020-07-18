@@ -4,17 +4,20 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/line/line-bot-sdk-go/linebot"
 )
 
 func main() {
-	client := &http.Client{}
-	bot, err := linebot.New("6635ba429ac2a1639a9d06562c0b843f", "h6gNcNbSRgJ3xioe0Ygh6w2qxgt3m4aNhZssGKJG0QtEgbv9EPvr+wLti6Ij9aUjbLWsBAed5BPA2oU4f0omWoSOwK5OYtRrA7OQeE4Edf4dTEDcXXmuMM/XMVPlamqSYnc6Ts0Z4c1pBh39F0ul9wdB04t89/1O/w1cDnyilFU=", linebot.WithHTTPClient(client))
+	bot, err := linebot.New(
+		os.Getenv("CHANNEL_SECRET"),
+		os.Getenv("CHANNEL_TOKEN"),
+	)
 	if err != nil {
-		fmt.Println(err)
-		return
+		log.Fatal(err)
 	}
+
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
 		events, err := bot.ParseRequest(req)
 		if err != nil {

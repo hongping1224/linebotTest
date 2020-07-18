@@ -19,8 +19,8 @@ func main() {
 	}
 
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
-		events, err := bot.ParseRequest(req)
 		fmt.Println("Get Request")
+		events, err := bot.ParseRequest(req)
 		if err != nil {
 			if err == linebot.ErrInvalidSignature {
 				w.WriteHeader(400)
@@ -45,6 +45,7 @@ func main() {
 				}
 			}
 		}
+		w.WriteHeader(200)
 	})
 	// This is just sample code.
 	// For actual use, you must support HTTPS by using `ListenAndServeTLS`, a reverse proxy or something else.

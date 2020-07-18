@@ -20,6 +20,7 @@ func main() {
 
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
 		events, err := bot.ParseRequest(req)
+		fmt.Println("Get Request")
 		if err != nil {
 			if err == linebot.ErrInvalidSignature {
 				w.WriteHeader(400)
@@ -47,6 +48,8 @@ func main() {
 	})
 	// This is just sample code.
 	// For actual use, you must support HTTPS by using `ListenAndServeTLS`, a reverse proxy or something else.
+	fmt.Println("Start serving on port 65000")
+
 	if err := http.ListenAndServe(":65000", nil); err != nil {
 		log.Fatal(err)
 	}

@@ -21,7 +21,9 @@ func main() {
 	http.HandleFunc("/callback", func(w http.ResponseWriter, req *http.Request) {
 		fmt.Println("Get Request")
 		events, err := bot.ParseRequest(req)
+		fmt.Println("finish parse")
 		if err != nil {
+			fmt.Println(err)
 			if err == linebot.ErrInvalidSignature {
 				w.WriteHeader(400)
 			} else {
@@ -29,6 +31,7 @@ func main() {
 			}
 			return
 		}
+		fmt.Println("no err")
 		for _, event := range events {
 			if event.Type == linebot.EventTypeMessage {
 				switch message := event.Message.(type) {
